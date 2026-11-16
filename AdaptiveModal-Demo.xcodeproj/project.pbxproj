@@ -87,7 +87,7 @@
 			packageProductDependencies = (
 				3E6E15722D5B800000EF6908 /* AdaptiveModal */,
 			);
-			productName = "UIPresentationController + Transitioning";
+			productName = "AdaptiveModal-Demo";
 			productReference = 3E6E154B2D5B43C000EF6908 /* AdaptiveModal-Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
