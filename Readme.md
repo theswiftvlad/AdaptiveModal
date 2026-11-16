@@ -3,11 +3,12 @@
 <div align="center">
   <img src="https://img.shields.io/badge/iOS-15.0%2B-blue" alt="iOS 15.0+"/>
   <img src="https://img.shields.io/badge/Swift-5.9%2B-orange" alt="Swift 5.9+"/>
+  <img src="https://img.shields.io/badge/SPM-compatible-brightgreen" alt="Swift Package Manager"/>
   <img src="https://img.shields.io/badge/Dependencies-None-green" alt="No Dependencies"/>
   <img src="https://img.shields.io/badge/License-MIT-lightgrey" alt="MIT License"/>
   <br><br>
 
-  <img src="AdaptiveModal-Demo/Assets/demo.gif"
+  <img src="Docs/demo.gif"
        width="500"
        style="border-radius: 10px"
        alt="Modal Demo Animation"/>
@@ -21,11 +22,36 @@
 - **Navigation inside the modal.** Push and pop within a `UINavigationController` with scale-and-fade transitions.
 - **Bottom or center placement**, configurable corner radius and background color.
 - **Dismiss your way:** tap outside the modal, or show an optional close button.
-- **No dependencies.** One file, plain UIKit.
+- **No dependencies.** One file, plain UIKit, available as a Swift package.
 
 ## Installation
 
-Copy [`AdaptiveModalPresentationController.swift`](AdaptiveModal-Demo/AdaptiveModalPresentationController.swift) into your project.
+### Swift Package Manager
+
+In Xcode choose **File → Add Package Dependencies…** and enter:
+
+```
+https://github.com/theswiftvlad/AdaptiveModal-Demo
+```
+
+Or add it to `Package.swift`:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/theswiftvlad/AdaptiveModal-Demo", from: "1.0.0")
+],
+targets: [
+    .target(name: "YourTarget", dependencies: [
+        .product(name: "AdaptiveModal", package: "AdaptiveModal-Demo")
+    ])
+]
+```
+
+Then `import AdaptiveModal`.
+
+### Manually
+
+Copy [`AdaptiveModalPresentationController.swift`](Sources/AdaptiveModal/AdaptiveModalPresentationController.swift) into your project.
 
 ## Usage
 
@@ -87,9 +113,9 @@ extension ViewController: UINavigationControllerDelegate {
 
 ## Requirements
 
-- iOS 15.0+ for the component (the demo app targets iOS 18.2)
+- iOS 15.0+
 - Swift 5.9+
-- Xcode 16+ to open the demo project
+- Xcode 16+ to open the demo project (it uses the package from this repository)
 
 ## Author
 

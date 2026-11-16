@@ -5,6 +5,7 @@
 //  Created by Vlad Tretiak on 2/11/25.
 //
 
+import AdaptiveModal
 import UIKit
 
 // This view controller demonstrates a custom modal presentation using a custom transitioning delegate.

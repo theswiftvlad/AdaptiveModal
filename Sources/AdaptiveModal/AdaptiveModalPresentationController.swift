@@ -1,6 +1,6 @@
 //
 //  AdaptiveModalPresentationController.swift
-//  AdaptiveModal-Demo
+//  AdaptiveModal
 //
 //  Created by Vlad Tretiak on 2/11/25.
 //
@@ -10,7 +10,7 @@ import UIKit
 // MARK: - Configuration
 
 public struct AdaptiveModalConfiguration {
-    public var showDismissButton = true
+    public var showDismissButton: Bool
     public var cornerRadius: CGFloat
     public var backgroundColor: UIColor
     public var dismissWhenTouchOutside: Bool
@@ -75,7 +75,7 @@ public final class AdaptiveModalPresentationController: UIPresentationController
         return button
     }()
     
-    init(
+    public init(
         presentedViewController: UIViewController,
         presenting: UIViewController?,
         configuration: AdaptiveModalConfiguration = .default
@@ -141,7 +141,7 @@ public final class AdaptiveModalPresentationController: UIPresentationController
         let yOffset = {
             switch configuration.placement {
             case .center:
-                containerView.frame.midY - preferredSize.height / 2
+                containerView.bounds.midY - preferredSize.height / 2
             case .bottom:
                 containerView.bounds.height - preferredSize.height - containerView.safeAreaInsets.bottom
             }
@@ -197,26 +197,29 @@ public final class AdaptiveModalTransitioningDelegate: NSObject, UIViewControlle
 
 // MARK: - Transition Animator
 
-final class TransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    enum TransitionType {
+public final class TransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+    public enum TransitionType {
         case present
         case dismiss
     }
     
     private let type: TransitionType
     
-    init(type: TransitionType) {
+    public init(type: TransitionType) {
         self.type = type
         super.init()
     }
     
-    func transitionDuration(using transitionContext: (any UIViewControllerContextTransitioning)?) -> TimeInterval {
+    public func transitionDuration(using transitionContext: (any UIViewControllerContextTransitioning)?) -> TimeInterval {
         0.35
     }
     
-    func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
+    public func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
         guard let fromView = transitionContext.view(forKey: .from),
-              let toView = transitionContext.view(forKey: .to) else { return }
+              let toView = transitionContext.view(forKey: .to) else {
+            transitionContext.completeTransition(false)
+            return
+        }
         
         let containerView = transitionContext.containerView
         let duration = transitionDuration(using: transitionContext)
