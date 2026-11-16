@@ -1,4 +1,4 @@
-# AdaptiveModal-Demo
+# AdaptiveModal
 
 <div align="center">
   <img src="https://img.shields.io/badge/iOS-15.0%2B-blue" alt="iOS 15.0+"/>
@@ -31,18 +31,18 @@
 In Xcode choose **File → Add Package Dependencies…** and enter:
 
 ```
-https://github.com/theswiftvlad/AdaptiveModal-Demo
+https://github.com/theswiftvlad/AdaptiveModal
 ```
 
 Or add it to `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/theswiftvlad/AdaptiveModal-Demo", from: "1.0.0")
+    .package(url: "https://github.com/theswiftvlad/AdaptiveModal", from: "1.0.0")
 ],
 targets: [
     .target(name: "YourTarget", dependencies: [
-        .product(name: "AdaptiveModal", package: "AdaptiveModal-Demo")
+        .product(name: "AdaptiveModal", package: "AdaptiveModal")
     ])
 ]
 ```
