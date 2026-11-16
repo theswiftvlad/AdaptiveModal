@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  UIPresentationController + Transitioning
+//  AdaptiveModal-Demo
 //
 //  Created by Vlad Tretiak on 2/11/25.
 //

@@ -1,62 +1,69 @@
 # AdaptiveModal-Demo
 
 <div align="center">
-  <img src="https://img.shields.io/badge/iOS-13.0%2B-blue" alt="iOS 13.0+"/>
-  <img src="https://img.shields.io/badge/Swift-5.0%2B-orange" alt="Swift 5.0+"/>
+  <img src="https://img.shields.io/badge/iOS-15.0%2B-blue" alt="iOS 15.0+"/>
+  <img src="https://img.shields.io/badge/Swift-5.9%2B-orange" alt="Swift 5.9+"/>
   <img src="https://img.shields.io/badge/Dependencies-None-green" alt="No Dependencies"/>
+  <img src="https://img.shields.io/badge/License-MIT-lightgrey" alt="MIT License"/>
   <br><br>
-  
-  <img src="AdaptiveModal-Demo/Assets/demo.gif" 
+
+  <img src="AdaptiveModal-Demo/Assets/demo.gif"
        width="500"
        style="border-radius: 10px"
        alt="Modal Demo Animation"/>
-  
-  <p>Elegant and adaptive modal presenter with smooth transitions built with UIPresentationController</p>
+
+  <p>An adaptive modal sheet for UIKit that sizes itself to its content and animates smoothly between screens — built on <code>UIPresentationController</code>.</p>
 </div>
 
-## Key Features
-✨ **Native Implementation**
-- Built with UIPresentationController
-- Custom transition animations
-- Dynamic content sizing
-- Gesture-driven interactions
+## Features
 
-🚀 **Smooth Experience**
-- Scale-based transitions
-- Hardware-accelerated animations
-- Adaptive layout support
-- Native iOS feel
+- **Sizes to content.** The modal measures its content with Auto Layout and resizes as you push and pop screens.
+- **Navigation inside the modal.** Push and pop within a `UINavigationController` with scale-and-fade transitions.
+- **Bottom or center placement**, configurable corner radius and background color.
+- **Dismiss your way:** tap outside the modal, or show an optional close button.
+- **No dependencies.** One file, plain UIKit.
+
+## Installation
+
+Copy [`AdaptiveModalPresentationController.swift`](AdaptiveModal-Demo/AdaptiveModalPresentationController.swift) into your project.
 
 ## Usage
 
-### Basic Setup
+### Present a modal
+
 ```swift
-// Create transition delegate
-let transitionDelegate = PresentationController()
+// Keep a strong reference: transitioningDelegate is weak
+let transitionDelegate = AdaptiveModalTransitioningDelegate(configuration: .default)
 
-// Configure your view controller
-let contentVC = YourViewController()
-let navigationController = UINavigationController(rootViewController: contentVC)
-navigationController.modalPresentationStyle = .custom
-navigationController.transitioningDelegate = transitionDelegate
-
-// Present modally
-present(navigationController, animated: true)
+func presentModal() {
+    let navigationController = UINavigationController(rootViewController: YourViewController())
+    navigationController.modalPresentationStyle = .custom
+    navigationController.transitioningDelegate = transitionDelegate
+    present(navigationController, animated: true)
+}
 ```
 
-### Customization
+### Customize appearance
+
 ```swift
-let config = YFModalPresentationConfiguration(
+let configuration = AdaptiveModalConfiguration(
     showDismissButton: true,
     cornerRadius: 36,
     backgroundColor: .systemBackground,
     dismissWhenTouchOutside: true,
-    placement: .bottom
+    placement: .bottom // or .center
 )
+
+let transitionDelegate = AdaptiveModalTransitioningDelegate(configuration: configuration)
 ```
 
-### Navigation Support
+### Animate push and pop inside the modal
+
+Set your object as the navigation controller's delegate and return `TransitionAnimator`:
+
 ```swift
+navigationController.delegate = self
+
 extension ViewController: UINavigationControllerDelegate {
     func navigationController(
         _ navigationController: UINavigationController,
@@ -72,20 +79,22 @@ extension ViewController: UINavigationControllerDelegate {
 }
 ```
 
-## Technical Highlights
-- 🎯 Built on native UIPresentationController
-- 🔄 Custom UIViewControllerAnimatedTransitioning
-- 📱 Full navigation stack support
-- 🎨 Highly customizable appearance
-- 📐 Automatic size adaptation
+## How it works
+
+- `AdaptiveModalPresentationController` (a `UIPresentationController` subclass) adds the dimming view and computes the modal frame from the content's `systemLayoutSizeFitting`.
+- `AdaptiveModalTransitioningDelegate` hands that presentation controller to UIKit.
+- `TransitionAnimator` (`UIViewControllerAnimatedTransitioning`) cross-fades snapshots of both screens while the container animates to the new height.
 
 ## Requirements
-- iOS 13.0+
-- Swift 5.0+
-- Xcode 13.0+
+
+- iOS 15.0+ for the component (the demo app targets iOS 18.2)
+- Swift 5.9+
+- Xcode 16+ to open the demo project
 
 ## Author
-Created by [Vlad Tretiak](your_linkedin_url)
+
+Vlad Tretiak, [LinkedIn](https://www.linkedin.com/in/theswiftvlad) · [GitHub](https://github.com/theswiftvlad)
 
 ## License
-MIT License - feel free to use in your projects 😉
+
+MIT. See [LICENSE](LICENSE).

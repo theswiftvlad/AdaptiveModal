@@ -1,6 +1,6 @@
 //
-//  YFModalPresentationController.swift
-//  UIPresentationController + Transitioning
+//  AdaptiveModalPresentationController.swift
+//  AdaptiveModal-Demo
 //
 //  Created by Vlad Tretiak on 2/11/25.
 //
@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - Configuration
 
-public struct YFModalPresentationConfiguration {
+public struct AdaptiveModalConfiguration {
     public var showDismissButton = true
     public var cornerRadius: CGFloat
     public var backgroundColor: UIColor
@@ -34,8 +34,8 @@ public struct YFModalPresentationConfiguration {
         self.placement = placement
     }
     
-    public static var `default`: YFModalPresentationConfiguration {
-        YFModalPresentationConfiguration(
+    public static var `default`: AdaptiveModalConfiguration {
+        AdaptiveModalConfiguration(
             showDismissButton: false,
             cornerRadius: 36,
             backgroundColor: .systemBackground,
@@ -47,9 +47,9 @@ public struct YFModalPresentationConfiguration {
 
 // MARK: - Modal Presenter
 
-public final class YFModalPresentationController: UIPresentationController {
+public final class AdaptiveModalPresentationController: UIPresentationController {
     
-    private let configuration: YFModalPresentationConfiguration
+    private let configuration: AdaptiveModalConfiguration
     
     // Adding a background dimming view
     private let dimmingView: UIView = {
@@ -78,7 +78,7 @@ public final class YFModalPresentationController: UIPresentationController {
     init(
         presentedViewController: UIViewController,
         presenting: UIViewController?,
-        configuration: YFModalPresentationConfiguration = .default
+        configuration: AdaptiveModalConfiguration = .default
     ) {
         self.configuration = configuration
         super.init(
@@ -164,20 +164,20 @@ public final class YFModalPresentationController: UIPresentationController {
         presentingViewController.dismiss(animated: true)
     }
     
-    private func applyAppearance(from configuration: YFModalPresentationConfiguration) {
+    private func applyAppearance(from configuration: AdaptiveModalConfiguration) {
         presentedView?.backgroundColor = configuration.backgroundColor
         presentedView?.layer.cornerRadius = configuration.cornerRadius
         presentedView?.layer.masksToBounds = true
     }
 
 }
-// MARK: - UI Presentation Controller
+// MARK: - Transitioning Delegate
 
-public final class PresentationController: NSObject, UIViewControllerTransitioningDelegate {
+public final class AdaptiveModalTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     
-    private let configuration: YFModalPresentationConfiguration
+    private let configuration: AdaptiveModalConfiguration
     
-    public init(configuration: YFModalPresentationConfiguration) {
+    public init(configuration: AdaptiveModalConfiguration) {
         self.configuration = configuration
         super.init()
     }
@@ -187,7 +187,7 @@ public final class PresentationController: NSObject, UIViewControllerTransitioni
         presenting: UIViewController?,
         source: UIViewController
     ) -> UIPresentationController? {
-        YFModalPresentationController(
+        AdaptiveModalPresentationController(
             presentedViewController: presented,
             presenting: presenting,
             configuration: configuration
@@ -195,7 +195,7 @@ public final class PresentationController: NSObject, UIViewControllerTransitioni
     }
 }
 
-// MARK: - Transitiong Animator
+// MARK: - Transition Animator
 
 final class TransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     enum TransitionType {

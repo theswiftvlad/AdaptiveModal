@@ -1,6 +1,6 @@
 //
 //  Usage+Example.swift
-//  UIPresentationController + Transitioning
+//  AdaptiveModal-Demo
 //
 //  Created by Vlad Tretiak on 2/11/25.
 //
@@ -11,7 +11,7 @@ import UIKit
 final class ViewController: UIViewController {
 
     // Delegate responsible for managing the custom presentation and transition animations.
-    let transitionDelegate = PresentationController(configuration: .default)
+    let transitionDelegate = AdaptiveModalTransitioningDelegate(configuration: .default)
     
     // Button that triggers the modal presentation when tapped.
     private let exampleButton: UIButton = {
